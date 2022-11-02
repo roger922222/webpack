@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head></head>
+  <body>
+    <!-- <script src="./src/index.js"></script> -->
+
+    <script>
+      // webpack bundle.js 原型
+      
+      // let exports = {};
+      // // 自运行函数
+      // (function (exports, code) {
+      //   eval(code)
+      // })(exports, 'exports.default = function (a, b) { return a + b }')
+
+      // console.log(exports.default(1, 2))
+
+      // exports.default = function (a, b) { return a + b }
+
+      // 大的自运行函数
+      (function (list) {
+        // 模拟require函数
+        function require(file) {
+          let exports = {};
+          // 自运行函数
+          (function (exports, code) {
+            eval(code)
+          })(exports, list[file])
+
+          return exports
+        }
+
+        require('index.js')
+      })({
+        'add.js': `exports.default = function (a, b) { return a + b }`,
+        'index.js': `
+          var add = require('add.js').default;
+          console.log(add(2, 4), 'add-add-add') 
+        `
+      })
+
+      // 结构体
+      // const list = {
+      //   'add.js': `exports.default = function (a, b) { return a + b }`,
+      //   'index.js': `
+      //     var add = require('./add.js').default;
+      //     console.log(add(2, 4), 'add-add-add') 
+      //   `
+      // }
+
+      // 模拟require函数
+      // function require(file) {
+      //   let exports = {};
+      //   // 自运行函数
+      //   (function (exports, code) {
+      //     eval(code)
+      //   })(exports, list[file])
+
+      //   return exports
+      // }
+
+
+      // var add = require('./add.js').default
+      // console.log(add(2, 4), 'add-add-add') 
+
+
+    </script>
+
+  </body>
+</html>
